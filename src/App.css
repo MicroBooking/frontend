@@ -1,4 +1,7 @@
+@import "bootstrap/dist/css/bootstrap.css";
+
 .App {
+  justify-content: center;
   text-align: center;
 }
 
