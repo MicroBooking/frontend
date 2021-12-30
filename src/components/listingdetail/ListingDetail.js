@@ -1,12 +1,114 @@
+import axios from "axios";
+import { useState } from "react"
+import { useEffect } from "react"
+import { Routes, Route, useParams } from "react-router-dom";
+import { Card } from "react-bootstrap"
+import { Carousel } from "react-bootstrap";
+import { Button } from "react-bootstrap"
+
+
+
 export default function ListingDetail(props){
+   const params = useParams();
+
    const [listing, setListing] = useState({});
    const [reservation, setReservation] = useState({});
    const [images, setImages] = useState([]);
 
-   useEffect(() => {
-       effect
-       return () => {
-           cleanup
+   const reserveListing = () => {
+       const body = {
+           startDate: '2012-03-19T07:22Z',
+           endDate: '2012-03-19T07:22Z',
+           ownerId: 1,
+           reserverId: 1,
+           listingId: params.id
        }
-   }, [input])
+
+       axios.post('http://localhost:8081/v1/reservations', body).then(res => {
+           console.log('success!')
+       })
+   }
+   useEffect(() => {
+       const fetchData = async () => {
+           const listingData = () => axios.get(`http://localhost:8080/v1/listings/${params.id}`).then(res => {
+               setListing(res.data);
+               console.log(res.data.reservationId)
+               reservationData(res.data.reservationId);
+           })
+           const reservationData = (reservationId) => axios.get(`http://localhost:8081/v1/reservations/${reservationId}`).then(res => {
+               setReservation(res.data);
+               imageData()
+           }).catch(e => {
+               setReservation(null);
+               imageData()
+           })
+
+           const imageData = () => axios.get(`http://localhost:8082/v1/images/listing/${params.id}`).then(res => {
+            setImages(res.data.map(image => {
+                return {original: image.url, originalHeight: 300, originalWidth:300}
+            }))
+        })
+
+        listingData();
+       }
+
+       fetchData()
+
+       console.log(images)
+       
+   }, [])
+
+   return (
+       <div className="row d-flex justify-content-center">
+        <div className= "row d-flex justify-content-center">
+            <Card style={{ width: '45rem' }} className="text-center mt-5 justify-content-center">
+                <Card.Body>
+                    <Card.Title>RESERVATION DETAILS</Card.Title>
+                    <Card.Title>{listing.title}</Card.Title>
+                    <Card.Text>
+                    {listing.description}
+                    </Card.Text>
+                    <Card.Text>
+                    Type: {listing.type}
+                    </Card.Text>
+                    <Card.Text>
+                    owner: {listing.ownerId}
+                    </Card.Text>
+                    <Card.Text>
+                    Price per month: {listing.monthlyPrice} €
+                    </Card.Text>
+                    <Card.Text>
+                    Reserved: {listing.reserved ? "Yes" : "No"}
+                    </Card.Text>
+                    <Card.Text>
+                    Reserver: {listing.reserved ? `${reservation.reserverId}` : "/"}
+                    </Card.Text>
+                </Card.Body>
+            </Card>
+       </div>   
+       <div className= "row d-flex justify-content-center mt-5">
+            <Card style={{ width: '45rem', height:'25rem'}} className="text-center justify-content-center">
+            <Card.Title>{images.length > 0 ? "UPLOADED PHOTOS" : "No photos uploaded."}</Card.Title>
+            <Carousel>
+            {images.map(image => (
+                             <Carousel.Item style={{width:'45rem', height:'20rem'}}>
+                             <img
+                               className="d-block w-100 h-100"
+                               src={image.original}
+                             />
+
+                           </Carousel.Item>   
+            ))}
+            </Carousel>
+            </Card>
+       </div>   
+       <div className= "col d-flex justify-content-center mt-5">
+       {listing.reserved? 
+       <div>Listing already reserved.</div> :        <Button style={{width:'10%', "margin-top" : '10px'}} onClick={reserveListing}>Reserve
+       </Button>   }
+       </div>  
+
+  
+       </div>
+   )
 }

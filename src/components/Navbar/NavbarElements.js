@@ -25,6 +25,18 @@ export const NavLink = styled(Link)`
     color: #000000;
   }
 `;
+
+export const NavLabel = styled.div`
+  color: #000000;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 0 1rem;
+  height: 100%;
+  &.active {
+    color: #000000;
+  }
+`;
   
 export const Bars = styled(FaBars)`
   display: none;

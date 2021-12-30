@@ -1,10 +1,14 @@
 import axios from "axios"
+import { useNavigate } from 'react-router-dom';
 import { useState } from "react"
 import { useEffect } from "react"
 import { Card } from "react-bootstrap"
 import { Button } from "react-bootstrap"
+import {Link } from "react-router-dom";
+
 
 export default function MainPage() {
+    const navigate = useNavigate();
 
     const [listings, setListings] = useState([])
 
@@ -16,12 +20,12 @@ export default function MainPage() {
    }, [])
 
     return (
-        
         <div className="col d-flex justify-content-center">
+        <div>
             {listings.map(listing => {
                 return (
                     <div>
-                    <Card style={{ width: '18rem' }} className="mainPage text-center mt-5">
+                    <Card style={{ width: '40rem' }} className="mainPage text-center mt-5">
                     <Card.Body>
                         <Card.Title>{listing.title}</Card.Title>
                         <Card.Text>
@@ -40,7 +44,8 @@ export default function MainPage() {
                         Reserved: {listing.reserved ? "Yes" : "No"}
                         </Card.Text>
                     </Card.Body>
-                    <Button>See more</Button>
+                    <Button onClick={() => navigate(`/details/${listing.listingId}`)}>See more
+                    </Button>
                     </Card>
 
                     </div>
@@ -49,6 +54,8 @@ export default function MainPage() {
             })}
 
         </div>
+        </div>
+
 
     )
 }
