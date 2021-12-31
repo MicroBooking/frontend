@@ -10,6 +10,7 @@ import { Button } from "react-bootstrap"
 
 export default function ListingDetail(props){
    const params = useParams();
+   const [justReserved, setJustReserved] = useState(false);
 
    const [listing, setListing] = useState({});
    const [reservation, setReservation] = useState({});
@@ -25,7 +26,8 @@ export default function ListingDetail(props){
        }
 
        axios.post('http://localhost:8081/v1/reservations', body).then(res => {
-           console.log('success!')
+           console.log('success!');
+           setJustReserved(true);
        })
    }
    useEffect(() => {
@@ -104,8 +106,7 @@ export default function ListingDetail(props){
        </div>   
        <div className= "col d-flex justify-content-center mt-5">
        {listing.reserved? 
-       <div>Listing already reserved.</div> :        <Button style={{width:'10%', "margin-top" : '10px'}} onClick={reserveListing}>Reserve
-       </Button>   }
+       <div>Listing already reserved.</div> :   justReserved ? <div>Successfully reserved.</div>  :  <Button style={{width:'10%', "margin-top" : '10px'}} onClick={reserveListing}>Reserve</Button> }
        </div>  
 
   

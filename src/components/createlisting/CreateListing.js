@@ -3,9 +3,12 @@ import { Button } from "react-bootstrap"
 import { useState } from "react";
 import ImageUploading from 'react-images-uploading';
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 
 export default function CreateListing () {
+
+    const navigate = useNavigate();
 
     const [images, setImages] = useState([]);
     const [title, setTitle] = useState("");
@@ -71,6 +74,7 @@ export default function CreateListing () {
             console.log(promises)
             axios.all(promises).then(res => {
                 console.log('Success!')
+                navigate('/')
             })
         }
 
@@ -155,7 +159,9 @@ export default function CreateListing () {
             </Form>
 
             </div>
+
         </div>
+        
     )
 }
 
