@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: shigoto-react
+  name: frontend-r
   labels:
-    component: react
+    component: frontend-r
 spec:
   replicas: 1
   selector:
     matchLabels:
-      component: react
+      component: frontend-r
   template:
     metadata:
       labels:
-        component: react
+        component: frontend-r
     spec:
       containers:
-        - name: react
-          image: bogdanp3trovic/shigoto_q_production_react
+        - name: frontend-r
+          image: bogdanp3trovic/frontend-r
           ports:
             - containerPort: 3000
           env:
