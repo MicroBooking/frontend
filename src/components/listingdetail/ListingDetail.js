@@ -25,19 +25,19 @@ export default function ListingDetail(props){
            listingId: params.id
        }
 
-       axios.post(process.env.REACT_APP_RESERVATIONS_SERVICE_URL, body).then(res => {
+       axios.post('http://206.189.249.190/reservations-service/v1/reservations', body).then(res => {
            console.log('success!');
            setJustReserved(true);
        })
    }
    useEffect(() => {
        const fetchData = async () => {
-           const listingData = () => axios.get(`${process.env.REACT_APP_LISTINGS_SERVICE_URL}/${params.id}`).then(res => {
+           const listingData = () => axios.get(`http://206.189.249.190/listings-service/v1/listings/${params.id}`).then(res => {
                setListing(res.data);
                console.log(res.data.reservationId)
                reservationData(res.data.reservationId);
            })
-           const reservationData = (reservationId) => axios.get(`${process.env.REACT_APP_LISTINGS_SERVICE_URL}/${reservationId}`).then(res => {
+           const reservationData = (reservationId) => axios.get(`http://206.189.249.190/reservations-service/v1/reservations/${reservationId}`).then(res => {
                setReservation(res.data);
                imageData()
            }).catch(e => {
@@ -45,7 +45,7 @@ export default function ListingDetail(props){
                imageData()
            })
 
-           const imageData = () => axios.get(`${process.env.REACT_APP_IMAGES_SERVICE_URL}/listing/${params.id}`).then(res => {
+           const imageData = () => axios.get(`http://206.189.249.190/images-service/v1/images/listing/${params.id}`).then(res => {
             setImages(res.data.map(image => {
                 return {original: image.url, originalHeight: 300, originalWidth:300}
             }))
