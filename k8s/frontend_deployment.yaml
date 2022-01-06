@@ -21,17 +21,17 @@ spec:
             - containerPort: 3000
           env:
             - name: REACT_APP_LISTINGS_SERVICE_URL
-            valueFrom:
+              valueFrom:
               configMapKeyRef:
                 key: REACT_APP_LISTINGS_SERVICE_URL
                 name: frontend-configmap
             - name: REACT_APP_RESERVATIONS_SERVICE_URL
-            valueFrom:
+              valueFrom:
               configMapKeyRef:
                 key: REACT_APP_RESERVATIONS_SERVICE_URL
                 name: frontend-configmap
             - name: REACT_APP_IMAGES_SERVICE_URL
-            valueFrom:
+              valueFrom:
               configMapKeyRef:
                 key: REACT_APP_IMAGES_SERVICE_URL
                 name: frontend-configmap
