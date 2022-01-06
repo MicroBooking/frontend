@@ -14,7 +14,7 @@ export default function MainPage() {
 
 
    useEffect(() => {
-       axios.get("http://localhost:8080/v1/listings").then(res => {
+       axios.get(process.env.REACT_APP_LISTINGS_SERVICE_URL).then(res => {
            setListings(res.data)
        })
    }, [])

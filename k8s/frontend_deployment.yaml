@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shigoto-react
+  labels:
+    component: react
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: react
+  template:
+    metadata:
+      labels:
+        component: react
+    spec:
+      containers:
+        - name: react
+          image: bogdanp3trovic/shigoto_q_production_react
+          ports:
+            - containerPort: 3000
+          env:
+            - name: REACT_APP_LISTINGS_SERVICE_URL
+            valueFrom:
+              configMapKeyRef:
+                key: REACT_APP_LISTINGS_SERVICE_URL
+                name: frontend-configmap
+            - name: REACT_APP_RESERVATIONS_SERVICE_URL
+            valueFrom:
+              configMapKeyRef:
+                key: REACT_APP_RESERVATIONS_SERVICE_URL
+                name: frontend-configmap
+            - name: REACT_APP_IMAGES_SERVICE_URL
+            valueFrom:
+              configMapKeyRef:
+                key: REACT_APP_IMAGES_SERVICE_URL
+                name: frontend-configmap

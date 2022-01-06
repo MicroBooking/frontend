@@ -52,7 +52,7 @@ export default function CreateListing () {
                 ownerId: 1
             }
 
-            return axios.post('http://localhost:8080/v1/listings', body)
+            return axios.post(process.env.REACT_APP_LISTINGS_SERVICE_URL, body)
         }
 
 
@@ -66,7 +66,7 @@ export default function CreateListing () {
                 bodyFormData.append('image', image.data_url)
                 promises.push(axios({
                     method: "post",
-                    url: "http://localhost:8082/v1/images/upload",
+                    url: process.env.REACT_APP_IMAGES_SERVICE_URL + "/upload",
                     data: bodyFormData,
                     headers: { "Content-Type": "multipart/form-data" },
                     }))

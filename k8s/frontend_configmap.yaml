@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  REACT_APP_LISTINGS_SERVICE_URL: http://listings-service/v1/listings
+  REACT_APP_RESERVATIONS_SERVICE_URL: http://reservations-service/v1/reservations
+  REACT_APP_IMAGES_SERVICE_URL: http://images-service/v1/images
+kind: ConfigMap
+metadata:
+  name: frontend-configmap
