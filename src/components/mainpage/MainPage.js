@@ -14,7 +14,7 @@ export default function MainPage() {
 
 
    useEffect(() => {
-       axios.get("http://206.189.249.190/v1/listings").then(res => {
+       axios.get("http://206.189.249.190/listings-service/v1/listings").then(res => {
            setListings(res.data)
        })
    }, [])
